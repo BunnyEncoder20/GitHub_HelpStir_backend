@@ -1,20 +1,23 @@
-const express = require('express')
-const cors = require('cors')
-require('dotenv').config()
+import {app} from "./app.js"
+import {connectFileDB} from "./db/db_connect.js"
 
 
-// Initilizing an express app
-const app = express()
-
-// Middleware for CORS (allows all CORS requests)
-app.use(cors())
-
-const port = process.env.PORT || 8000
-
-app.get('/api/v1/', (req, res) => {
-  res.send('Hello World!')
+import dotenv from "dotenv"
+dotenv.config({
+  path: './.env'
 })
 
-app.listen(port, () => {
-  console.log(`Todo app backend is listening on port ${port}`)
+
+// Connecting to file DB , returns a Promise
+connectFileDB()
+.then(() => {
+  // app listening here 
+  app.listen(process.env.PORT || 8000, () => {
+    console.log(`[Server@index.js] Todo app Server running on port ${port}`);
+  })
+})
+.catch((err) => {
+  console.log("[Server@index.js] Failed to connect to FileDB!!!");
+  console.log("[Server@index.js] Server starting aborted");
+  exit(1);
 })

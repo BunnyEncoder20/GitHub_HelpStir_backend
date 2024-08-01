@@ -35,3 +35,4 @@ npm install cors
 - For allowing Cross Origin Requests. 
 - For now, allowing all cross-origin request, but can whitelist only some, using cors config options.
 - **Though not requried** for the *just* backend, it's part of the backend structure and init configurations.
+
