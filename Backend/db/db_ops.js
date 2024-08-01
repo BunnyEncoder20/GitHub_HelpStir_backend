@@ -36,8 +36,8 @@ const write_db = async (db_path,data) => {
 }
 
 
-export default connectFileDB
 export {
+    connectFileDB,
     read_db,
     write_db
 }
