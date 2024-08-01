@@ -36,3 +36,20 @@ npm install cors
 - For now, allowing all cross-origin request, but can whitelist only some, using cors config options.
 - **Though not requried** for the *just* backend, it's part of the backend structure and init configurations.
 
+--- 
+
+## Utils Files
+
+Inside the utils folder created basic production utitility files for : 
+1. Async Function Error Handling : `asyncHandler.js`
+2. Standardized ApiResponses : `ApiResponse.js`
+3. Standardized ApiErrors : `ApiError.js`
+
+---
+
+## Package Json File Settings
+
+1. Added **start** script for starting the `index.js` file.
+2. Added **dev** script for starting nodemon for hot reloading of the server.
+3. Added **type:module** property for telling browser to import in module style.
+4. Added **--experimental-json-modules** flag for allowing of json module importing feature
