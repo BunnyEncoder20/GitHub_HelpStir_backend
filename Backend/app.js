@@ -35,7 +35,7 @@ import todoRouter from "./routes/todos.routes.js"
 
 
 // Routes declaratios 
-// standardized api route : `/api/v1/${route_name}`
+// standardized api route : `/api/v1/${router_filename}/${route}`
 app.use('/api/v1/todos', todoRouter);
 
 
