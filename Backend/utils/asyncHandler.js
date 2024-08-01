@@ -2,7 +2,7 @@
 
 const asyncHandler = (async_func) => {
     return (req,res,next) => {
-        Promise.resolve(async_func(req,res.next))   // Execute the function and resolve the promise with that returned value
+        Promise.resolve(async_func(req,res,next))   // Execute the function and resolve the promise with that returned value
         .catch((err)=>next(err));                   // If any error occurs within the Promise, .catch that and pass to next (global error handler) 
     }
 }

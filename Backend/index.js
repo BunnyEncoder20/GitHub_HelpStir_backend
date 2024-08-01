@@ -23,4 +23,5 @@ connectFileDB()
   console.error("[Server] Failed to connect to FileDB!!!");
   console.error("[Server] Server starting aborted");
   console.error(err);
+  process.exit();
 })

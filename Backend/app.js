@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors"
-import ApiResponse from "./utils/ApiResponse.js";
+import ApiError from "./utils/ApiError.js"
 
 // Initilizing an express app
 const app = express()
@@ -20,6 +20,14 @@ app.use(express.json({
     limit:"16kb"
 }));
 
+// Global error handler middleware
+app.use((err, req, res, next) => { 
+    err.statusCode = err.statusCode || 500;
+    err.message = err.message || "Default internal server error message"
+    res.status(err.statusCode).json(err);
+});
+
+
 // url parser middleware for data incoming from urls, also with limits
 app.use(express.urlencoded({
     extended:true,  
@@ -34,13 +42,7 @@ import todoRoutes from "./routes/todos.routes.js"
 
 
 
-// Routes declaratios 
-// app.use('/api/v1/',(req,res)=>{
-//     const api_response = new ApiResponse(200,"Default Route : basic api response is working.",{"api_endpoint":"version1"});
-//     res.status(api_response.statusCode).json(api_response);
-// })
-
-// standardized api route : `/api/v1/${routes_group}/${route}`
+// Routes forwarding
 app.use('/api/v1/todos', todoRoutes);
 
 

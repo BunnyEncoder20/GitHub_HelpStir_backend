@@ -2,7 +2,6 @@ import asyncHandler from "../utils/asyncHandler.js"
 import ApiResponse from "../utils/ApiResponse.js" 
 import {read_db, write_db} from "../db/db_ops.js"
 
-const db_path = "../db/fileDB.json"
 
 // Todos Endpoint Landing (no functionality)
 const landing = (req,res) => {
@@ -13,22 +12,31 @@ const landing = (req,res) => {
 
 // create a new todo
 const create_todo = asyncHandler(async (req,res) => {
-    const new_todo = req.body;
-    const data = await read_db(db_path);
+    const {title,description,completed,dueDate,priority} = req.body;
+    const data = await read_db();
 
-    new_todo._id = Date.now();
+    let new_todo = {
+        _id : Date.now(),
+        title,
+        description,
+        completed,
+        dueDate,
+        priority,
+        createdAt : new Date().toISOString(),
+        updatedAt : new Date().toISOString() 
+    };
 
     data.push(new_todo);
-    await write_db(db_path,data);
+    await write_db(data);
     
     const api_response = new ApiResponse(200,"Successfully created new todo",new_todo);
-    res.status(api_response.statusCode).json(api_response);
+    res.status(200).json(api_response);
 });
 
 
 // fetch all todos
 const fetch_todo = asyncHandler ( async (req,res) => {
-    const data = await read_db(db_path)
+    const data = await read_db()
 
     const api_response = new ApiResponse(200,"Successfully fetched all todos",data);
     res.status(api_response.statusCode).json(api_response);
