@@ -1,92 +1,12 @@
 [
   {
-    "_id": 1722528328352,
+    "_id": 1722537014478,
     "title": "Todo #1",
     "description": "Make Todo Backend Api endpoints",
     "completed": "false",
     "dueDate": "2024-08-02T00:11:59.000Z",
     "priority": "high",
-    "createdAt": "2024-08-01T16:05:28.352Z",
-    "updatedAt": "2024-08-01T16:05:28.355Z"
-  },
-  {
-    "_id": 1722528416274,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:06:56.274Z",
-    "updatedAt": "2024-08-01T16:06:56.277Z"
-  },
-  {
-    "_id": 1722528817503,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:13:37.503Z",
-    "updatedAt": "2024-08-01T16:13:37.505Z"
-  },
-  {
-    "_id": 1722528991405,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:16:31.405Z",
-    "updatedAt": "2024-08-01T16:16:31.407Z"
-  },
-  {
-    "_id": 1722530015703,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:33:35.703Z",
-    "updatedAt": "2024-08-01T16:33:35.705Z"
-  },
-  {
-    "_id": 1722530331500,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:38:51.500Z",
-    "updatedAt": "2024-08-01T16:38:51.502Z"
-  },
-  {
-    "_id": 1722530376736,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:39:36.736Z",
-    "updatedAt": "2024-08-01T16:39:36.738Z"
-  },
-  {
-    "_id": 1722530436288,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:40:36.288Z",
-    "updatedAt": "2024-08-01T16:40:36.291Z"
-  },
-  {
-    "_id": 1722531161910,
-    "title": "Todo #1",
-    "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
-    "dueDate": "2024-08-02T00:11:59.000Z",
-    "priority": "high",
-    "createdAt": "2024-08-01T16:52:41.910Z",
-    "updatedAt": "2024-08-01T16:52:41.911Z"
+    "createdAt": "2024-08-01T18:30:14.478Z",
+    "updatedAt": "2024-08-01T18:30:14.479Z"
   }
 ]

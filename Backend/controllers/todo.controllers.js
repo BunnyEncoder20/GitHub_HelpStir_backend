@@ -1,5 +1,6 @@
 import asyncHandler from "../utils/asyncHandler.js"
 import ApiResponse from "../utils/ApiResponse.js" 
+import ApiError from "../utils/ApiError.js";
 import {read_db, write_db} from "../db/db_ops.js"
 
 
@@ -36,9 +37,8 @@ const create_todo = asyncHandler(async (req,res) => {
 
 // fetch all todos
 const fetch_todo = asyncHandler ( async (req,res) => {
-    const data = await read_db()
-
-    const api_response = new ApiResponse(200,"Successfully fetched all todos",data);
+    const data = await read_db();
+    const api_response = new ApiResponse(200, "Successfully fetched all todos", data);
     res.status(api_response.statusCode).json(api_response);
 });
 

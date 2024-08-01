@@ -20,13 +20,6 @@ app.use(express.json({
     limit:"16kb"
 }));
 
-// Global error handler middleware
-app.use((err, req, res, next) => { 
-    err.statusCode = err.statusCode || 500;
-    err.message = err.message || "Default internal server error message"
-    res.status(err.statusCode).json(err);
-});
-
 
 // url parser middleware for data incoming from urls, also with limits
 app.use(express.urlencoded({
@@ -46,6 +39,11 @@ import todoRoutes from "./routes/todos.routes.js"
 app.use('/api/v1/todos', todoRoutes);
 
 
+// Global error handler middleware
+app.use((err, req, res, next) => {
+    console.log("[Global Error Handler] : ",err.message);
+    res.status(err.statusCode).json(err);
+});
 
 
 export default app;
