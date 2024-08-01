@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import ApiResponse from "./utils/ApiResponse.js";
 
 // Initilizing an express app
 const app = express()
@@ -29,14 +30,18 @@ app.use(express.urlencoded({
 
 
 // Importing routes
-import todoRouter from "./routes/todos.routes.js"
-
+import todoRoutes from "./routes/todos.routes.js"
 
 
 
 // Routes declaratios 
-// standardized api route : `/api/v1/${router_filename}/${route}`
-app.use('/api/v1/todos', todoRouter);
+app.use('/api/v1/',(req,res)=>{
+    const api_response = new ApiResponse(200,"Default Route : basic api response is working.",{"api_endpoint":"version1"});
+    res.status(api_response).json(api_response);
+})
+
+// standardized api route : `/api/v1/${routes_group}/${route}`
+app.use('/api/v1/todos', todoRoutes);
 
 
 

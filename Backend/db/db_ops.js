@@ -21,4 +21,23 @@ const connectFileDB = () => {
     })
 }
 
+
+// A utils for handling file reading and writing operations
+
+const read_db = async (db_path) => {
+    console.log("[utils@db_ops] Reading data from fileDB...");
+    const data = await fs.readFile(db_path,'utf-8');
+    return JSON.parse(data);
+}
+
+const write_db = async (db_path,data) => {
+    console.log("[utils@db_ops] Writing Data to fileDB...")
+    await fs.writeFile(db_path, JSON.stringify(data,null,2),'utf-8');
+}
+
+
 export default connectFileDB
+export {
+    read_db,
+    write_db
+}
