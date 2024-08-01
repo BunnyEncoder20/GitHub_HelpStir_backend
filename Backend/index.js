@@ -1,5 +1,5 @@
 import {app} from "./app.js"
-import {connectFileDB} from "./db/db_connect.js"
+import {connectFileDB} from "./db/init_db.js"
 
 
 import dotenv from "dotenv"
@@ -13,11 +13,11 @@ connectFileDB()
 .then(() => {
   // app listening here 
   app.listen(process.env.PORT || 8000, () => {
-    console.log(`[Server@index.js] Todo app Server running on port ${port}`);
+    console.log(`[Server@index.js] Todo app Server running on port ${process.env.PORT || 8000}`);
   })
 })
 .catch((err) => {
-  console.log("[Server@index.js] Failed to connect to FileDB!!!");
-  console.log("[Server@index.js] Server starting aborted");
-  exit(1);
+  console.error("[Server@index.js] Failed to connect to FileDB!!!");
+  console.error("[Server@index.js] Server starting aborted");
+  console.error(err);
 })

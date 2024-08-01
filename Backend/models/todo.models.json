@@ -1,0 +1,10 @@
+{
+    "id": "Get Date.now() for unique ids everytime",
+    "title": "Title for the todo",
+    "description": "what to do",
+    "completed": "boolean",
+    "createdAt": "Date object",
+    "updatedAt": "Date object",
+    "dueDate": "Date object",
+    "priority": "high/low"
+}

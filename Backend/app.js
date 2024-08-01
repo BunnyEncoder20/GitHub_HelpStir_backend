@@ -9,8 +9,6 @@ const app = express()
 // Middlewares Init
 
 // Middleware for CORS (allows all CORS requests)
-// This is where you'd usually set up your requests which should be allowed or not 
-// Eg: Allowing only the frontend origin requests 
 app.use(cors({
     origin:process.env.CORS_ORIGIN,
     credentials:true
@@ -23,16 +21,24 @@ app.use(express.json({
 
 // url parser middleware for data incoming from urls, also with limits
 app.use(express.urlencoded({
-    extended:true,  // for nested objects (generally not required)
+    extended:true,  
     limit: "16kb"
 }))
+
+
 
 
 // Importing routes
 
 
+
+
+
 // Routes declaratios 
-// standardized api route : 
+// standardized api route : `/api/v1/${route_name}`
+
+
+
 
 
 export default app;
