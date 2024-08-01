@@ -1,12 +1,17 @@
 const express = require('express')
+const cors = require('cors')
 require('dotenv').config()
+
 
 // Initilizing an express app
 const app = express()
 
-const port = process.env.PORT
+// Middleware for CORS (allows all CORS requests)
+app.use(cors())
 
-app.get('/', (req, res) => {
+const port = process.env.PORT || 8000
+
+app.get('/api/v1/', (req, res) => {
   res.send('Hello World!')
 })
 
