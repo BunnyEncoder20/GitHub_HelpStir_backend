@@ -119,8 +119,8 @@ const update_todo = asyncHandler( async (req,res) => {
 
 // Delete Todo
 const delete_todo = asyncHandler( async (req,res) => {
-    const data = read_db();
-    const { id } = req.query();
+    const data = await read_db();
+    const { id } = req.query;
     if (!id) {
         throw new ApiError(400,"No _id given for deletion request");
     }
@@ -128,7 +128,7 @@ const delete_todo = asyncHandler( async (req,res) => {
     console.log(`[Controller] Delete Todo request received for _id:${id}`);
 
     // Find if the todo exists
-    let to_be_deleted = data.find((todo) => todo._id === id);
+    let to_be_deleted = data.find((todo) => todo._id == id);
     if (!to_be_deleted) { 
         throw new ApiError(404,"The Todo to be deleted not found")
     }
