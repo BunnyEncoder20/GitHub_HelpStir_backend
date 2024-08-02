@@ -20,7 +20,7 @@ const fetch_todo = asyncHandler ( async (req,res) => {
     if (id) {
         console.log(`[Controller] Fetch request received with _id:${id}`);
 
-        const todo = data.find(todo => todo._id === id)
+        const todo = data.find(todo => todo._id == id)
         if (!todo){
             throw new ApiError(404,"[Controller] Todo not found");
         }
@@ -60,9 +60,10 @@ const fetch_todo = asyncHandler ( async (req,res) => {
 const add_todo = asyncHandler(async (req,res) => {
     const {title,description,done,dueDate,priority} = req.body;
 
-    console.log(`[Controller] Add todo request received for _id:${id}`);
+    console.log(`[Controller] Add todo request received for "${title}"`);
+    // console.table([title,description,done,dueDate,priority]);
 
-    if (!(title && description && completed && dueDate && priority)){
+    if (title == null || description == null || done == null || dueDate == null || priority == null){
         throw new ApiError(404,"[Controller] Required fields are missing in body");
     }
 
@@ -82,7 +83,7 @@ const add_todo = asyncHandler(async (req,res) => {
     data.push(new_todo);
     await write_db(data);
     
-    console.log(`[Controller] Todo created for _id:${id}`);
+    console.log(`[Controller] Todo created with _id:${new_todo._id}`);
     const api_response = new ApiResponse(200,"Successfully created new todo",new_todo);
     res.status(200).json(api_response);
 });
@@ -97,7 +98,7 @@ const update_todo = asyncHandler( async (req,res) => {
 
     console.log(`[Controller] Update request received for _id:${id}`);
 
-    let old_todo = data.find((todo) => todo._id === id);
+    let old_todo = data.find((todo) => todo._id == id);
     if (!old_todo){
         throw new ApiError(404,"[Controller] Todo not found");
     }
@@ -133,7 +134,7 @@ const delete_todo = asyncHandler( async (req,res) => {
     }
 
     // created new data array without the deleted one
-    const updated_data = data.filter((todo) => todo._id !== id);
+    const updated_data = data.filter((todo) => todo._id != id);
 
     // Write the updated data
     await write_db(updated_data);
@@ -156,7 +157,7 @@ const markDone_todo = asyncHandler( async (req,res) => {
     console.log(`[Controller] Mark as done request received for _id:${id}`);
 
     // Find if the todo exists or already marked as done
-    let to_be_marked = data.find((todo) => todo._id === id);
+    let to_be_marked = data.find((todo) => todo._id == id);
     if (!to_be_marked) { 
         throw new ApiError(404,"The Todo to mark as done not found");
     }

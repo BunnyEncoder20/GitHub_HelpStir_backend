@@ -8,5 +8,15 @@
     "priority": "high",
     "createdAt": "2024-08-02T01:35:06.237Z",
     "updatedAt": "2024-08-02T01:35:06.239Z"
+  },
+  {
+    "_id": 1722608137096,
+    "title": "Todo #2",
+    "description": "Learn in depth about React",
+    "done": false,
+    "dueDate": "2024-08-05T00:11:59.000Z",
+    "priority": "low",
+    "createdAt": "2024-08-02T14:15:37.096Z",
+    "updatedAt": "2024-08-02T14:15:37.096Z"
   }
 ]
