@@ -39,12 +39,32 @@ import todoRoutes from "./routes/todos.routes.js"
 app.use('/api/v1/todos', todoRoutes);
 
 
+
+
+// Middleware to handle unmatched requests
+app.all("/api/v1/todos/*", (req,res,next) => {
+    console.log(req.originalUrl);
+    next( new ApiError(404,`${req.originalUrl} not found. Check your url`) );
+});
+
+
+
+
 // Global error handler middleware
 app.use((err, req, res, next) => {
-    err.statusCode = err.statusCode || 500;
-    err.message = err.message || "Global Error Handler default Server error message";
-    console.log("[Global Error Handler] : ",err.message);
-    console.log(err);
+    console.log("[Global Error Handler] Global Error Handler Called");
+    console.log(err)
+    
+    if (!(err instanceof ApiError)) {
+        // Wrap the error in an ApiError instance if it is not already one
+        err = new ApiError(
+            500,
+            err.msg || "Global Error Handler default Server error message",
+            [],
+            err.stack
+        );
+    }
+
     res.status(err.statusCode).json(err);
 });
 

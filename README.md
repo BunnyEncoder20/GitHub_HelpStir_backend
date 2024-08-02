@@ -45,6 +45,8 @@ Inside the utils folder created basic production utitility files for :
 2. Standardized ApiResponses : `ApiResponse.js`
 3. Standardized ApiErrors : `ApiError.js`
 
+Also created Function for Global Error Handling in `app.js`
+
 ---
 
 ## Package Json File Settings
