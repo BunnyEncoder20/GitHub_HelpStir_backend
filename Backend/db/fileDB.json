@@ -23,10 +23,10 @@
     "_id": 1722609260061,
     "title": "#33 Soma Todo",
     "description": "irritate soma senpai",
-    "done": false,
+    "done": true,
     "dueDate": "2024-08-04T00:11:59.000Z",
     "priority": "high",
     "createdAt": "2024-08-02T14:34:20.061Z",
-    "updatedAt": "2024-08-02T14:44:44.247Z"
+    "updatedAt": "2024-08-02T16:05:33.519Z"
   }
 ]

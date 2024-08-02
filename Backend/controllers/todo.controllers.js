@@ -162,6 +162,7 @@ const markDone_todo = asyncHandler( async (req,res) => {
         throw new ApiError(404,"The Todo to mark as done not found");
     }
     else if (to_be_marked.done){
+        console.log("[Controller] The Todo is already marked as done.");
         const api_response = new ApiResponse(202,"The Todo is already marked as done",to_be_marked);
         return res.status(202).json(api_response);
     }
