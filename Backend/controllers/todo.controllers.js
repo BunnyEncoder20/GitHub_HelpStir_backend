@@ -37,6 +37,8 @@ const create_todo = asyncHandler(async (req,res) => {
 
 // fetch all todos
 const fetch_todo = asyncHandler ( async (req,res) => {
+    const { id, createdBefore, updatedBefore } = req.query;
+    
     const data = await read_db();
     const api_response = new ApiResponse(200, "Successfully fetched all todos", data);
     res.status(api_response.statusCode).json(api_response);
