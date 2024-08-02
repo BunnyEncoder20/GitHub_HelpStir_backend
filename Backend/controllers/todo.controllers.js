@@ -93,7 +93,7 @@ const add_todo = asyncHandler(async (req,res) => {
 // Update Todo
 const update_todo = asyncHandler( async (req,res) => {
     const data = await read_db()
-    const { updated_todo } = req.body;
+    const updated_todo = req.body;
     const { id } = req.query;
 
     console.log(`[Controller] Update request received for _id:${id}`);
