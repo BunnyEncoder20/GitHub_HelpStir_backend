@@ -41,6 +41,8 @@ app.use('/api/v1/todos', todoRoutes);
 
 // Global error handler middleware
 app.use((err, req, res, next) => {
+    err.statusCode = err.statusCode || 500;
+    err.message = err.message || "Global Error Handler default Server error message";
     console.log("[Global Error Handler] : ",err.message);
     res.status(err.statusCode).json(err);
 });

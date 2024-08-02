@@ -1,7 +1,12 @@
 import {promises as fs} from "fs"
 import ApiError from "../utils/ApiError.js"
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const db_path = "./fileDB.json"
+// Cause __dirname and __filename are not there is Es modules scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const db_path = path.join(__dirname, 'fileDB.json');
 
 const connectFileDB = async () => {
     try {
@@ -20,6 +25,7 @@ const connectFileDB = async () => {
 
 const read_db = async () => {
     try {
+        // throw new Error("Testing Error");
         console.log("[db_ops] Reading data from fileDB...");
         const data = await fs.readFile(db_path,'utf-8');
         console.log("[db_ops] Reading data completed.");

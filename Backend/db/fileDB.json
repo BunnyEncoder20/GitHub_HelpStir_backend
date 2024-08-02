@@ -1,12 +1,12 @@
 [
   {
-    "_id": 1722537014478,
+    "_id": 1722562506237,
     "title": "Todo #1",
     "description": "Make Todo Backend Api endpoints",
-    "completed": "false",
+    "completed": false,
     "dueDate": "2024-08-02T00:11:59.000Z",
     "priority": "high",
-    "createdAt": "2024-08-01T18:30:14.478Z",
-    "updatedAt": "2024-08-01T18:30:14.479Z"
+    "createdAt": "2024-08-02T01:35:06.237Z",
+    "updatedAt": "2024-08-02T01:35:06.239Z"
   }
 ]
