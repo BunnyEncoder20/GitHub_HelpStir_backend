@@ -32,20 +32,21 @@ const fetch_todo = asyncHandler ( async (req,res) => {
     if (sort){
         console.log(`[Controller] Fetch request received with _sort:${sort}`);
 
-        if (sort === "byCreatedDate.oldest"){
-            data.sort((a,b) => new Date(a.createdAt) - new Date(b.createdAt));
-        }
-        else if (sort === "byCreatedDate.latest"){
-            data.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-        }
-        else if (sort === "byUpdatedDate.oldest"){
-            data.sort((a,b) => new Date(a.updatedAt) - new Date(b.updatedAt));
-        }
-        else if (sort === "byUpdatedDate.latest"){
-            data.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-        }
-        else {
-            throw new ApiError(400,"The sorting methdod is not correct")
+        switch (sort) {
+            case "byCreatedDate.oldest":
+                data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                break;
+            case "byCreatedDate.latest":
+                data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                break;
+            case "byUpdatedDate.oldest":
+                data.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+                break;
+            case "byUpdatedDate.latest":
+                data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+                break;
+            default:
+                throw new ApiError(400, "The sorting method is not correct");
         }
     }
     

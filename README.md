@@ -1,57 +1,81 @@
-# GitHub_HelpStir_backend
+# GitHub HelpStir Backend - Todo List Application with NodeJS 
 
-- Todo App Backend Project Made for the HelpStir Backend Intern Position Qualification round
+Todo App Backend Project Made for the HelpStir Backend Intern Position Qualification round
 
----
+<br><br>
 
-## Installations 
+## System Design Overview
 
-The most important thing for any good backend, is to have **proper structure and set up** before proceeding to add anything to code the actual project.
+### 1. Architecture
+- **Frameworks**: The application uses `Node.js` with `Express.js` to handle API routes and middleware for managing HTTP requests and responses.
+- **Data Storage**: Todos are stored in a raw `.json` file within which the data is formatted as `JSON` array of objects.
 
-1. Initializing Project
+<br>
+
+### 2. API Endpoints
+- **Fetch Todos**
+    - **Description**: Retrieves a list of all todo items. Supports optional query parameters for searching and sorting (e.g., by date of last update) sent through params. 
+    - **Endpoints**: 
 ```
-npm init
-```
-
-2. Express package
-```
-npm install express
-```
-
-3. Nodemon (installed as a dev dependency)
-```
-npm install nodemon -D
-```
-
-4. dotenv
-```
-npm i dotenv
+localhost:3000/api/v1/todos/fetch
+localhost:3000/api/v1/todos/fetch?id=1722608137096
+localhost:3000/api/v1/todos/fetch?sort=byCreatedDate.oldest
 ```
 
-5. CORS package
+- **Add Todo**
+    - **Description**: Adds a new todo item to the list. The request body should include details such as title, description, priority, due date, and initial completion status.
+    - **Endpoints**:
 ```
-npm install cors
+localhost:3000/api/v1/todos/add
 ```
-- For allowing Cross Origin Requests. 
-- For now, allowing all cross-origin request, but can whitelist only some, using cors config options.
-- **Though not requried** for the *just* backend, it's part of the backend structure and init configurations.
 
---- 
 
-## Utils Files
+- **Update Todo**:
+    - **Description**: Updates an existing todo item identified by its unique ID. Allows modification of details such as title, description, priority, due date, and completion status.
+    - **Endpoints**:
+```
+localhost:3000/api/v1/todos/update?id=1722608137096
+```
 
-Inside the utils folder created basic production utitility files for : 
-1. Async Function Error Handling : `asyncHandler.js`
-2. Standardized ApiResponses : `ApiResponse.js`
-3. Standardized ApiErrors : `ApiError.js`
 
-Also created Function for Global Error Handling in `app.js`
+- **Delete Todo**:
+    - **Description**: Removes a todo item from the list based on its unique ID.
+    - **Endpoint**:
+```
+localhost:3000/api/v1/todos/delete?id=1722608137096
+```
 
----
 
-## Package Json File Settings
+- **Mark as Done**:
+    - **Description**: Marks a specified todo item as completed.
+    - **Endpoints**:
+```
+localhost:3000/api/v1/todos/mark?id=1722608137096
+```
 
-1. Added **start** script for starting the `index.js` file.
-2. Added **dev** script for starting nodemon for hot reloading of the server.
-3. Added **type:module** property for telling browser to import in module style.
-4. Added **--experimental-json-modules** flag for allowing of json module importing feature
+<br>
+
+### 3. Data Storage
+
+- **Format**: Todos are stored in a JSON format within a json file.
+- **Operations**: The application reads from and writes to this file to manage todo entries. Operations include checking if the file exists on server start and updating the file on add, update, or delete actions.
+
+<br>
+
+### 4. Code Quality and Scalability
+- **Scalability**: The codebase is designed to handle growing amounts of data and user requests efficiently. API routes are clearly defined to ensure organized and scalable route management.
+- **Optimizations**:
+- **Error Handling**: The application includes comprehensive and standardized error handling with appropriate `HTTP` **status codes** to manage error cases (e.g., not found, bad request).
+
+<br>
+
+### 5. Error Handling
+- **Global Error Handler**: Proper standardized error responses are implemented for various scenarios such as invalid requests, missing data, and internal server errors via Global Error Handler.
+- **ApiError Class**: Proper ApiError Class for standardized error responses back.
+- **Status Codes**: The API responds with relevant HTTP status codes to indicate the success or failure of operations.
+
+<br><br>
+
+## Explaination of Implementation 
+
+## Instructions on Setting up and Running application
