@@ -58,7 +58,7 @@ const fetch_todo = asyncHandler ( async (req,res) => {
 
 // adds a new todo
 const add_todo = asyncHandler(async (req,res) => {
-    const {title,description,completed,dueDate,priority} = req.body;
+    const {title,description,done,dueDate,priority} = req.body;
 
     console.log(`[Controller] Add todo request received for _id:${id}`);
 
@@ -72,7 +72,7 @@ const add_todo = asyncHandler(async (req,res) => {
         _id : Date.now(),
         title,
         description,
-        completed,
+        done,
         dueDate,
         priority,
         createdAt : new Date().toISOString(),
@@ -104,7 +104,7 @@ const update_todo = asyncHandler( async (req,res) => {
 
     // updating the old todo object
     updated_todo.updatedAt = new Date().toISOString();
-    Object.assign(old_todo, updated_todo)
+    Object.assign(old_todo, updated_todo);
 
     // writing date back
     await write_db(data);
@@ -117,12 +117,65 @@ const update_todo = asyncHandler( async (req,res) => {
 
 
 // Delete Todo
-const delete_todo = asyncHandler( async (req,res) => {});
+const delete_todo = asyncHandler( async (req,res) => {
+    const data = read_db();
+    const { id } = req.query();
+    if (!id) {
+        throw new ApiError(400,"No _id given for deletion request");
+    }
+
+    console.log(`[Controller] Delete Todo request received for _id:${id}`);
+
+    // Find if the todo exists
+    let to_be_deleted = data.find((todo) => todo._id === id);
+    if (!to_be_deleted) { 
+        throw new ApiError(404,"The Todo to be deleted not found")
+    }
+
+    // created new data array without the deleted one
+    const updated_data = data.filter((todo) => todo._id !== id);
+
+    // Write the updated data
+    await write_db(updated_data);
+
+    console.log("[Controller] Deleted Todo successfully.");
+    const api_response = new ApiResponse(200,"Successfully Deleted Todo",to_be_deleted);
+    res.status(200).json(api_response);
+});
 
 
 
-// Mark as Done
-const markDone_todo = asyncHandler( async (req,res) => {});
+// Mark Todo as Done
+const markDone_todo = asyncHandler( async (req,res) => {
+    const data = await read_db();
+    const { id } = req.query;
+    if (!id) {
+        throw new ApiError(400,"No _id given for marking request");
+    }
+
+    console.log(`[Controller] Mark as done request received for _id:${id}`);
+
+    // Find if the todo exists or already marked as done
+    let to_be_marked = data.find((todo) => todo._id === id);
+    if (!to_be_marked) { 
+        throw new ApiError(404,"The Todo to mark as done not found");
+    }
+    else if (to_be_marked.done){
+        const api_response = new ApiResponse(202,"The Todo is already marked as done",to_be_marked);
+        return res.status(202).json(api_response);
+    }
+
+    // mark the todo as done
+    to_be_marked.done = true
+    to_be_marked.updatedAt = new Date().toISOString();
+
+    // write the updated data 
+    await write_db(data);
+
+    console.log("[Controller] Marked Todo as Done successfully.");
+    const api_response = new ApiResponse(200,"Successfully marked Todo as done",to_be_marked);
+    res.status(200).json(api_response);
+});
 
 
 
