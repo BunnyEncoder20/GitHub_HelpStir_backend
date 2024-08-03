@@ -13,7 +13,7 @@ class ApiError extends Error {
         this.msg = msg;
         this.success = false;
         this.errors = errors;
-        this.error_stack = error_stack || this.stack
+        // this.error_stack = error_stack || this.stack
     }
 }
 

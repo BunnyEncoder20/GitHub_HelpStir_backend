@@ -33,7 +33,7 @@ const fetch_todo = asyncHandler ( async (req,res) => {
         return res.status(200).json(api_response);
     }
 
-    const shallow_copy_data = [...data];
+    let shallow_copy_data = [...data];
 
     if (sort) {
         console.log(`[Controller] Fetch request received with _sort:${sort}`);
@@ -92,12 +92,12 @@ const fetch_todo = asyncHandler ( async (req,res) => {
 
 // adds a new todo
 const add_todo = asyncHandler(async (req,res) => {
-    const {title,description,done,dueDate,priority} = req.body;
+    const {title,description,dueDate,priority} = req.body;
 
     console.log(`[Controller] Add todo request received for "${title}"`);
     // console.table([title,description,done,dueDate,priority]);
 
-    if (title == null || description == null || done == null || dueDate == null || priority == null){
+    if (title == null || description == null || dueDate == null || priority == null){
         throw new ApiError(404,"[Controller] Required fields are missing in body");
     }
 
@@ -107,7 +107,7 @@ const add_todo = asyncHandler(async (req,res) => {
         _id : Date.now(),
         title,
         description,
-        done,
+        done : false,
         dueDate,
         priority,
         createdAt : new Date().toISOString(),

@@ -1,18 +1,18 @@
 const binarySearch = (arr, id) => {
     let low = 0;
-    let high = arr.lenght-1;
+    let high = arr.length-1;
 
     while ( low<=high ) {
 
-        mid = Math.floor((low+high)/2);
+        let mid = Math.floor((low+high)/2);
 
-        if (arr[mid]._id == id){
+        if (arr[mid]._id == id) {
             return arr[mid];
         }
-        else if (arr[mid]._id < id){
+        else if (arr[mid]._id < id) {
             low = mid+1;
         }
-        else{
+        else {
             high = mid-1;
         }
     }
