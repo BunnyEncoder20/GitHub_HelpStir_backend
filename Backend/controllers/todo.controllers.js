@@ -2,10 +2,7 @@ import asyncHandler from "../utils/asyncHandler.js"
 import ApiResponse from "../utils/ApiResponse.js" 
 import ApiError from "../utils/ApiError.js";
 import {read_db, write_db} from "../db/db_ops.js"
-
-// for optimizations 
-// NOTE : you need to install the lodash package in your porject : npm i lodash
-import keyBy from "lodash/keyBy.js"
+import binarySearch from "../utils/bsHandler.js";
 
 
 
@@ -25,13 +22,8 @@ const fetch_todo = asyncHandler ( async (req,res) => {
     if (id) {
         console.log(`[Controller] Fetch request received with _id:${id}`);
 
-        
-        // making DS for efficient look up
-        let todosByID = keyBy(data, "_id");
-        console.log(todosByID);
-        let todo = todosByID[id];                               // efficient O(1) look up
-
         // const todo = data.find(todo => todo._id == id);      // O(n) look up
+        const todo = binarySearch(data,id);                     // O(log n) look up
 
         if (!todo){
             throw new ApiError(404,"[Controller] Todo not found");
