@@ -132,7 +132,8 @@ const update_todo = asyncHandler( async (req,res) => {
 
     console.log(`[Controller] Update request received for _id:${id}`);
 
-    let old_todo = data.find((todo) => todo._id == id);
+    // let old_todo = data.find((todo) => todo._id == id);
+    let old_todo = binarySearch(data, id);                  // O(log n) look up
     if (!old_todo){
         throw new ApiError(404,"[Controller] Todo not found");
     }
@@ -162,7 +163,8 @@ const delete_todo = asyncHandler( async (req,res) => {
     console.log(`[Controller] Delete Todo request received for _id:${id}`);
 
     // Find if the todo exists
-    let to_be_deleted = data.find((todo) => todo._id == id);
+    // let to_be_deleted = data.find((todo) => todo._id == id);
+    let to_be_deleted = binarySearch(data, id);                 // O(log n) look up
     if (!to_be_deleted) { 
         throw new ApiError(404,"The Todo to be deleted not found")
     }
@@ -191,7 +193,8 @@ const markDone_todo = asyncHandler( async (req,res) => {
     console.log(`[Controller] Mark as done request received for _id:${id}`);
 
     // Find if the todo exists or already marked as done
-    let to_be_marked = data.find((todo) => todo._id == id);
+    // let to_be_marked = data.find((todo) => todo._id == id);
+    let to_be_marked = binarySearch(data, id);                  // O(log n) look up
     if (!to_be_marked) { 
         throw new ApiError(404,"The Todo to mark as done not found");
     }
