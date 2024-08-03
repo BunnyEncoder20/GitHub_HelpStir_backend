@@ -32,6 +32,7 @@ app.use(express.urlencoded({
 
 // Importing routes
 import todoRoutes from "./routes/todos.routes.js"
+import { StatusCodes } from "./constants.js";
 
 
 
@@ -44,7 +45,7 @@ app.use('/api/v1/todos', todoRoutes);
 // Middleware to handle unmatched requests
 app.all("/api/v1/todos/*", (req,res,next) => {
     console.log(req.originalUrl);
-    next( new ApiError(404,`${req.originalUrl} not found. Check your url`) );
+    next( new ApiError(StatusCodes.NOT_FOUND,`${req.originalUrl} not found. Check your url`) );
 });
 
 
@@ -58,7 +59,7 @@ app.use((err, req, res, next) => {
     if (!(err instanceof ApiError)) {
         // Wrap the error in an ApiError instance if it is not already one
         err = new ApiError(
-            500,
+            StatusCodes.INTERNAL_SERVER_ERROR,
             err.msg || "Global Error Handler default Server error message",
             [],
             err.stack

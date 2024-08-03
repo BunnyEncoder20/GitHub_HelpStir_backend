@@ -3,11 +3,11 @@
     "_id": 1722562506237,
     "title": "Todo #1",
     "description": "Make Todo Backend Api endpoints",
-    "done": false,
+    "done": true,
     "dueDate": "2024-08-02T00:11:59.000Z",
     "priority": "high",
     "createdAt": "2024-08-02T01:35:06.237Z",
-    "updatedAt": "2024-08-02T01:35:06.239Z"
+    "updatedAt": "2024-08-03T17:02:27.208Z"
   },
   {
     "_id": 1722608137096,
