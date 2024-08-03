@@ -3,6 +3,7 @@ import ApiResponse from "../utils/ApiResponse.js"
 import ApiError from "../utils/ApiError.js";
 import {read_db, write_db} from "../db/db_ops.js"
 import binarySearch from "../utils/bsHandler.js";
+import { StatusCodes } from "../constants.js";
 
 
 
@@ -26,13 +27,14 @@ const fetch_todo = asyncHandler ( async (req,res) => {
         const todo = binarySearch(data,id);                     // O(log n) look up
 
         if (!todo){
-            throw new ApiError(404,"[Controller] Todo not found");
+            throw new ApiError(StatusCodes.NOT_FOUND,"[Controller] Todo not found");
         }
         
-        const api_response = new ApiResponse(200,"Todo found",todo);
+        const api_response = new ApiResponse(StatusCodes.OK,"Todo found",todo);
         return res.status(200).json(api_response);
     }
 
+    // Creating shallow copy to avoid changing the original data
     let shallow_copy_data = [...data];
 
     if (sort) {
