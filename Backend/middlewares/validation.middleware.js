@@ -1,9 +1,9 @@
-import ApiError from '../utils/ApiError';
-import asyncHandler from '../utils/asyncHandler'
+import ApiError from '../utils/ApiError.js';
+import asyncHandler from '../utils/asyncHandler.js'
+import { StatusCodes } from '../constants.js'
 import Joi from "joi"
-import { StatusCodes } from '../constants'
 
-// JOI validation middleware function for incoming data
+
 
 // POST method validation schema
 const POST_JoiSchema = Joi.object({
@@ -16,7 +16,7 @@ const POST_JoiSchema = Joi.object({
 
 // PATCH method validation schema
 const PATCH_JoiSchema = Joi.object({
-	_id: Joi.string().required(),
+	_id: Joi.number().required(),
 	title: Joi.string().max(30).optional(),
 	description: Joi.string().max(100).optional(),
 	dueDate: Joi.date().optional(),
@@ -24,24 +24,64 @@ const PATCH_JoiSchema = Joi.object({
 }).options({ abortEarly : false})
 
 
+// Fetch Method validation schema
+const FETCH_JoiSchema = Joi.object({
+	id: Joi.number().optional(),
+	sort: Joi.string()
+			 .valid('byCreatedDate_oldest','byCreatedDate_latest','byUpdatedDate_oldest','byUpdatedDate_latest')
+			 .optional(),
+	filter_criteria : Joi.string()
+						 .valid('before_createdDate','after_createdDate','before_updatedDate','after_updatedDate')
+						 .optional(),
+	filter_date : Joi.date().when('filter_criteria',{
+		is : Joi.exist(),
+		then : Joi.required(),
+		otherwise : Joi.optional()
+	})
+}).options({ abortEarly : false });
+
+
+
+// DELETE method validation schema
+const DELETE_JoiSchema = Joi.object({
+	id: Joi.number().required()
+})
+
+
+
+// JOI validation middleware function for incoming data
+
 const validator = asyncHandler( async (req,res,next) => {
   	let validation_schema;
+	let data;
 
-	if ( req.method === 'POST') {
-		validation_schema = POST_JoiSchema;
+	switch (req.method) {
+		case 'GET':
+			validation_schema = FETCH_JoiSchema;
+			data = {...req.query};
+			break;
+		case 'POST':
+			validation_schema = POST_JoiSchema;
+			data = req.body;
+			break;
+		case 'PATCH':
+			validation_schema = PATCH_JoiSchema;
+			data = req.body;
+			data.id = req.query.id;
+			break;
+		case 'DELETE':
+			validation_schema = DELETE_JoiSchema;
+			data = {...req.query};
+			break;
+		default:
+			return next(new ApiError(StatusCodes.BAD_REQUEST,"Improper HTTP method recieved. Check your routes"));
 	}
-	else if ( req.method === 'PATCH') {
-		validation_schema = PATCH_JoiSchema;
-		req.body._id = req.query.id;
-	}
-	else {
-		return next(new ApiError(StatusCodes.BAD_REQUEST,"The given http method does not need validation. Check your routes"));
-	}
-
-	const { error } = validation_schema.validate(req.body);
+	
+	// Validate the data
+	const { error } = validation_schema.validate(data);
 
 	if ( error ) {
-		return next( new ApiError(StatusCodes.UNPROCESSABLE,"Data failed validation check. Check the data being passed",error.details))
+		return next( new ApiError(StatusCodes.UNPROCESSABLE,"Data failed validation check. Check the data being sent",error.details))
 	}
 
 	// If everything is correct, move along 
