@@ -154,9 +154,6 @@ const update_todo = asyncHandler( async (req,res) => {
 const delete_todo = asyncHandler( async (req,res) => {
     const data = await read_db();
     const { id } = req.query;
-    if (!id) {
-        throw new ApiError(StatusCodes.UNPROCESSABLE,"No _id given for deletion request");
-    }
 
     console.log(`[Controller] Delete Todo request received for _id:${id}`);
 
@@ -185,7 +182,7 @@ const markDone_todo = asyncHandler( async (req,res) => {
     const data = await read_db();
     const { id } = req.query;
     if (!id) {
-        throw new ApiError(StatusCodes.UNPROCESSABLE,"No _id given for marking request");
+        throw new ApiError(StatusCodes.UNPROCESSABLE,"id is required for marking");
     }
 
     console.log(`[Controller] Mark as done request received for _id:${id}`);

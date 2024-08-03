@@ -21,12 +21,32 @@
   },
   {
     "_id": 1722609260061,
-    "title": "#33 Soma Todo",
+    "title": "#3 Todo Soma ",
     "description": "irritate soma senpai",
     "done": true,
     "dueDate": "2024-08-04T00:11:59.000Z",
     "priority": "high",
     "createdAt": "2024-08-02T14:34:20.061Z",
-    "updatedAt": "2024-08-02T16:05:33.519Z"
+    "updatedAt": "2024-08-03T16:57:42.966Z"
+  },
+  {
+    "_id": 1722703738278,
+    "title": "Todo #4 Fight Bunny",
+    "description": "Chomp Chomp",
+    "done": false,
+    "dueDate": "2024-08-02T00:11:59.000Z",
+    "priority": "medium",
+    "createdAt": "2024-08-03T16:48:58.278Z",
+    "updatedAt": "2024-08-03T16:48:58.280Z"
+  },
+  {
+    "_id": 1722704230537,
+    "title": "Todo #5 Outing",
+    "description": "Go to National Park with Soma on Sunday",
+    "done": false,
+    "dueDate": "2024-08-03T00:10:00.000Z",
+    "priority": "medium",
+    "createdAt": "2024-08-03T16:57:10.537Z",
+    "updatedAt": "2024-08-03T16:57:10.539Z"
   }
 ]

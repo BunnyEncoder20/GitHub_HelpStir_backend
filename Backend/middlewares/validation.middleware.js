@@ -7,8 +7,8 @@ import Joi from "joi"
 
 // POST method validation schema
 const POST_JoiSchema = Joi.object({
-  title: Joi.string().max(30).required(),
-  description: Joi.string().max(100).required(),
+  title: Joi.string().max(50).required(),
+  description: Joi.string().max(200).required(),
   dueDate: Joi.date().required(),
   priority: Joi.string().valid('high','low','medium').required(),
 }).options({ abortEarly: false });
@@ -16,9 +16,9 @@ const POST_JoiSchema = Joi.object({
 
 // PATCH method validation schema
 const PATCH_JoiSchema = Joi.object({
-	_id: Joi.number().required(),
-	title: Joi.string().max(30).optional(),
-	description: Joi.string().max(100).optional(),
+	id: Joi.number().required(),
+	title: Joi.string().max(50).optional(),
+	description: Joi.string().max(200).optional(),
 	dueDate: Joi.date().optional(),
 	priority: Joi.string().valid('high','low','medium').optional(),
 }).options({ abortEarly : false})
@@ -62,11 +62,11 @@ const validator = asyncHandler( async (req,res,next) => {
 			break;
 		case 'POST':
 			validation_schema = POST_JoiSchema;
-			data = req.body;
+			data = {...req.body};
 			break;
 		case 'PATCH':
 			validation_schema = PATCH_JoiSchema;
-			data = req.body;
+			data = {...req.body};
 			data.id = req.query.id;
 			break;
 		case 'DELETE':
