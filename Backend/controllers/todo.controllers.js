@@ -3,6 +3,11 @@ import ApiResponse from "../utils/ApiResponse.js"
 import ApiError from "../utils/ApiError.js";
 import {read_db, write_db} from "../db/db_ops.js"
 
+// for optimizations 
+// NOTE : you need to install the lodash package in your porject : npm i lodash
+import keyBy from "lodash/keyBy.js"
+
+
 
 // Todos Endpoint Landing (no functionality)
 const landing = (req,res) => {
@@ -15,12 +20,19 @@ const landing = (req,res) => {
 // fetch Todos 
 const fetch_todo = asyncHandler ( async (req,res) => {
     const data = await read_db();
-    const { id,sort } = req.query;
+    const { id, sort, filter_criteria, filter_date } = req.query;
 
     if (id) {
         console.log(`[Controller] Fetch request received with _id:${id}`);
 
-        const todo = data.find(todo => todo._id == id)
+        
+        // making DS for efficient look up
+        let todosByID = keyBy(data, "_id");
+        console.log(todosByID);
+        let todo = todosByID[id];                               // efficient O(1) look up
+
+        // const todo = data.find(todo => todo._id == id);      // O(n) look up
+
         if (!todo){
             throw new ApiError(404,"[Controller] Todo not found");
         }
@@ -29,29 +41,58 @@ const fetch_todo = asyncHandler ( async (req,res) => {
         return res.status(200).json(api_response);
     }
 
-    if (sort){
+    const shallow_copy_data = [...data];
+
+    if (sort) {
         console.log(`[Controller] Fetch request received with _sort:${sort}`);
 
         switch (sort) {
             case "byCreatedDate.oldest":
-                data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                shallow_copy_data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
                 break;
             case "byCreatedDate.latest":
-                data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                shallow_copy_data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 break;
             case "byUpdatedDate.oldest":
-                data.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+                shallow_copy_data.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
                 break;
             case "byUpdatedDate.latest":
-                data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+                shallow_copy_data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
                 break;
             default:
-                throw new ApiError(400, "The sorting method is not correct");
+                console.error(`[Controller] The sorting criteria "${sort}" is not correct`);
+                throw new ApiError(400, "The sorting criteria is not correct");
+        }
+    }
+
+    if (filter_criteria) {
+        if (!filter_date){
+            throw new ApiError(400, "Recieved request for filtering without filter_date")
+        }
+
+        console.log(`[Controller] Fetch request received with \n_filter:${filter_criteria} \n_filterDate:${filter_date}`);
+        
+        switch (filter_criteria) {
+            case "before.createdDate":
+                shallow_copy_data = data.filter((todo) => new Date(todo.createdAt) < new Date(filter_date));
+                break;
+            case "after.createdDate":
+                shallow_copy_data = data.filter((todo) => new Date(todo.createdAt) >= new Date(filter_date));
+                break;
+            case "before.updatedDate":
+                shallow_copy_data = data.filter((todo) => new Date(todo.updatedAt) < new Date(filter_date));
+                break;
+            case "after.updatedDate":
+                shallow_copy_data = data.filter((todo) => new Date(todo.updatedAt) >= new Date(filter_date));
+                break;
+            default:
+                console.error(`[Controller] The filtering criteria ${filter} is not corrent`);
+                throw new ApiError(400, "The filtering criteria is not correct ");
         }
     }
     
     console.log(`[Controller] Successfully fetched todos`);
-    const api_response = new ApiResponse(200, "Successfully fetched todos", data);
+    const api_response = new ApiResponse(200, "Successfully fetched todos", shallow_copy_data);
     res.status(api_response.statusCode).json(api_response);
 });
 
