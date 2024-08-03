@@ -6,5 +6,5 @@
     "createdAt": "Date object",
     "updatedAt": "Date object",
     "dueDate": "Date object",
-    "priority": "high/low"
+    "priority": ["high","low","medium"]
 }

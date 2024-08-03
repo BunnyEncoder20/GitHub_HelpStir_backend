@@ -1,6 +1,6 @@
-import {promises as fs} from "fs"
 import ApiError from "../utils/ApiError.js"
 import path from 'path';
+import { promises as fs } from "fs"
 import { fileURLToPath } from 'url';
 
 // Cause __dirname and __filename are not there is Es modules scope
